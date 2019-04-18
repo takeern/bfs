@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { API } from '../plugins/api';
+import { API } from '../plugins/API';
 
 export default () => {
     const inputEl = useRef(null);

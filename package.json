@@ -8,7 +8,8 @@
     "start": "better-npm-run start",
     "build:client": "better-npm-run build:client",
     "build:server": "better-npm-run build:server",
-    "server": "better-npm-run server"
+    "server": "better-npm-run server",
+    "dev": "webpack-dev-server --progress --config ./config/webpack.development.js"
   },
   "betterScripts": {
     "server": {
@@ -19,7 +20,7 @@
       }
     },
     "start": {
-      "command": "webpack-dev-server --progress --host 0.0.0.0 --config ./config/webpack.development.js",
+      "command": "webpack-dev-server --progress --config ./config/webpack.development.js",
       "env": {
         "NODE_ENV": "dev"
       }

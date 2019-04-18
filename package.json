@@ -1,5 +1,5 @@
 {
-  "name": "dake-template",
+  "name": "bfs",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -19,7 +19,7 @@
       }
     },
     "start": {
-      "command": "webpack-dev-server --progress  --config ./config/webpack.development.js",
+      "command": "webpack-dev-server --progress --host 0.0.0.0 --config ./config/webpack.development.js",
       "env": {
         "NODE_ENV": "dev"
       }

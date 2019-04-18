@@ -1,4 +1,5 @@
-import Home from './component/Home.jsx';
+import Home from './component/Home';
+import Upload from './component/Upload';
 
 const routes = [
     {
@@ -6,6 +7,11 @@ const routes = [
         component: Home,
         exact: true,
     },
+    {
+        path: '/upload',
+        component: Upload,
+        exact: true,
+    }
 ];
 
 export default routes;

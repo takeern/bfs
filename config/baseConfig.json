@@ -1,7 +1,7 @@
 {
 	"entryScript": "../src/entry_client.js",
 	"entryHtml": "../src/index.html",
-	"output": "../dist",
+	"output": "../../dist",
 	"port": "8088",
 	"host": "localhost",
 	"isTs": "false",

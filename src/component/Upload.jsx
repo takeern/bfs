@@ -12,14 +12,13 @@ const toast = (text, timeout = 3000) => {
             document.body.removeChild(div);
         }, 3000)
     }, timeout - 3000);
-}
+};
 
 export default () => {
     const inputEl = useRef(null);
     const fileNameWrapper = useRef(null);
     const pathWrapper = useRef(null);
     const selectType = useRef(null);
-    const mask = useRef(null);
     const handleClick = () => {
         inputEl.current.click();
     };

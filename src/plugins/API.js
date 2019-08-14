@@ -1,5 +1,5 @@
 const API = {
-    UPLOAD_PATH: '//207.148.92.222:4000/upload',
+    UPLOAD_PATH: '//45.32.84.18:4000/upload',
 };
 
 export {

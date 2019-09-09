@@ -1,5 +1,5 @@
 import SignIn from './component/Signin';
-import SignUp from './component/signUp';
+import SignUp from './component/Signup';
 import Uploads from './component/Upload';
 import Dashboard from './component/Dashboard';
 import Upload from './component/dashboard/Upload';

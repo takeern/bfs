@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,6 +10,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+
+import { API } from '../plugins/API';
+import { tfetch } from '../plugins/fetch';
 
 function MadeWithLove() {
     return (
@@ -50,8 +52,94 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
     const classes = useStyles();
+    const [ state, setState ] = useState({
+        password: '',
+        passwordAgain: '',
+        account: '',
+        email: '',
+        msg: '',
+        open: false,
+    });
+
+    const [ errorStyle, setErrorStyle ] = useState({
+        account: false,
+        password: false,
+        passwordAgain: false,
+        email: false,
+    });
+
+    const handleInputChange = (e, type) => {
+        const { value } = e.target;
+        setState(state => Object.assign({}, state, { [type]: value }));
+        changeErrorStyle(type, value);
+    };
+
+    const changeErrorStyle = (type, value) => {
+        setErrorStyle((newState) => {
+            return {
+                ...newState,
+                [type]: !value,
+            };
+        });
+    };
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
+    }
+
+    const submit = async () => {
+        const { password, account, passwordAgain, email } = state;
+        if (!password || !account || !passwordAgain || !email) {
+            return setErrorStyle({
+                account: !account,
+                password: !password,
+                passwordAgain: !passwordAgain,
+                email: !email,
+            });
+        }
+        if (password !== passwordAgain) {
+            setState({
+                ...state,
+                open: true,
+                msg: 'Two inconsistent password input',
+            });
+            return changeErrorStyle('passwordAgain', false);
+        }
+        // fetch and get some thing
+        const res = await tfetch({
+            path: API.SIGNUP,
+            data: {
+                account,
+                password,
+                email,
+            },
+            type: 'POST',
+        });
+        if (res.code === 10000) {
+            setState({
+                ...state,
+                msg: 'register Success',
+                open: true,
+            });
+            setTimeout(() => {
+                props.history.push('/signIn');
+            }, 1000);
+        } else {
+            if (res.value && res.value.type) {
+                setErrorStyle({
+                    ...errorStyle,
+                    [res.value.type]: true,
+                });
+            }
+            setState({
+                ...state,
+                msg: res.msg || 'unknow error',
+                open: true,
+            });
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -65,71 +153,81 @@ export default function SignUp() {
                 </Typography>
                 <form className={classes.form} noValidate>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                    <TextField
-                        autoComplete="fname"
-                        name="firstName"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="First Name"
-                        autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="lname"
-                    />
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="account"
+                            label="Account"
+                            name="account"
+                            autoComplete="account"
+                            value={state.account}
+                            error={errorStyle.account}
+                            onChange={(e) => handleInputChange(e, 'account')}
+                        />
                     </Grid>
                     <Grid item xs={12}>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                    />
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={state.email}
+                            error={errorStyle.email}
+                            onChange={(e) => handleInputChange(e, 'email')}
+                        />
                     </Grid>
                     <Grid item xs={12}>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={state.password}
+                            error={errorStyle.password}
+                            onChange={(e) => handleInputChange(e, 'password')}
+                        />
                     </Grid>
                     <Grid item xs={12}>
-                    <FormControlLabel
-                        control={<Checkbox value="allowExtraEmails" color="primary" />}
-                        label="I want to receive inspiration, marketing promotions and updates via email."
-                    />
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            name="passwordAgain"
+                            label="Set Password Again"
+                            type="password"
+                            id="passwordAgain"
+                            autoComplete="current-passwordAgain"
+                            value={state.passwordAgain}
+                            error={errorStyle.passwordAgain}
+                            onChange={(e) => handleInputChange(e, 'passwordAgain')}
+                        />
                     </Grid>
                 </Grid>
                 <Button
-                    type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+                    onClick={() => submit()}
                 >
                     Sign Up
                 </Button>
                 <Grid container justify="flex-end">
                     <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link 
+                    href="#" 
+                    variant="body2" 
+                    onClick={() => props.history.push('/signIn')}
+                    >
                         Already have an account? Sign in
                     </Link>
                     </Grid>
@@ -139,6 +237,16 @@ export default function SignUp() {
             <Box mt={5}>
                 <MadeWithLove />
             </Box>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={state.open}
+                onClose={handleClose}
+                variant='error'
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{state.msg}</span>}
+            />
         </Container>
     );
 }

@@ -1,16 +1,14 @@
-import Signin from './component/Signin';
+import SignIn from './component/Signin';
 import SignUp from './component/signUp';
-import Upload from './component/Upload';
+import Uploads from './component/Upload';
+import Dashboard from './component/Dashboard';
+import Upload from './component/dashboard/Upload';
+import User from './component/dashboard/User';
 
-const routes = [
-    {
-        path: '/upload',
-        component: Upload,
-        exact: true,
-    },
+const route = [
     {
         path: '/signIn',
-        component: Signin,
+        component: SignIn,
         exact: true,
     },
     {
@@ -18,6 +16,33 @@ const routes = [
         component: SignUp,
         exact: true,
     },
+    {
+        path: '/uploads',
+        component: Uploads,
+        exact: true,
+    },
+    {
+        path: '/',
+        component: Dashboard,
+        exact: false,
+        routes: [
+            {
+                path: '/upload',
+                component: Upload,
+                exact: true,
+            },
+            {
+                path: '/updateJournal',
+                component: Upload,
+                exact: true,
+            },
+            {
+                path: '/myAccount',
+                component: User,
+                exact: true,
+            },
+        ],
+    },
 ];
 
-export default routes;
+export default route;

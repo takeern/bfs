@@ -2,7 +2,7 @@
 	"entryScript": "../src/entry_client.js",
 	"entryHtml": "../src/index.html",
 	"output": "../../dist",
-	"port": "8088",
+	"port": "8080",
 	"host": "localhost",
 	"isTs": "false",
 	"outPutName": "index.js"

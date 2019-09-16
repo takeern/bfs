@@ -81,10 +81,18 @@ export default function CustomizedTables(props) {
             const res = await tfetch({
                 path: API.GET_UPLOAD_INFO,
             });
-            setState({
-                ...state,
-                data: res.data,
-            });
+            if (res.code === 10000) {
+                setState({
+                    ...state,
+                    data: res.data || [],
+                });
+            } else {
+                setState({
+                    ...state,
+                    msg: res.msg || 'unknow error',
+                    open: true,
+                });
+            }
         };
         getData();
     }, []);

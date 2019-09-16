@@ -14,16 +14,14 @@ export const tfetch = ({ path, type, data}) => {
         });
     } else {
 
-        if (data) {
-            data['csrf-token'] = getCookie('token');
-        }
+        data = data || {};
+        data['csrf_token'] = getCookie('token');
 
         return fetch(path, {
             method: 'Post',
             body: qs.stringify(data),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'x-csrf-token': getCookie('token'),
             },
             mode: 'cors',
         }).then(res => {

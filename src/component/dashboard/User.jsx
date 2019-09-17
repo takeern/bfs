@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
@@ -64,6 +65,9 @@ const useStyles = makeStyles(theme => ({
         left: '40%',
         marginTop: 80,
     },
+    noData: {
+        marginTop: 40,
+    }
 }));
 
 export default function CustomizedTables(props) {
@@ -74,6 +78,7 @@ export default function CustomizedTables(props) {
         showDialog: false,
         editIndex: null,
         msg: '',
+        showNoData: false,
     });
 
     useEffect(() => {
@@ -85,6 +90,7 @@ export default function CustomizedTables(props) {
                 setState({
                     ...state,
                     data: res.data || [],
+                    showNoData: res.data.length === 0 ? true : false,
                 });
             } else {
                 setState({
@@ -146,6 +152,7 @@ export default function CustomizedTables(props) {
                     open: true,
                     showDialog: false,
                     data: res.data,
+                    showNoData: res.data.length === 0 ? true : false,
                 });
             } else {
                 setState({
@@ -162,6 +169,7 @@ export default function CustomizedTables(props) {
             });
         }
     }
+    
     return (
         <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -201,6 +209,9 @@ export default function CustomizedTables(props) {
             ))}
             </TableBody>
         </Table>
+        {state.showNoData && <Typography variant='body2' color='textSecondary' align='center' className={classes.noData}>
+            {'There is no data'}
+        </Typography>}
         <Button
             variant='contained'
             color='primary'

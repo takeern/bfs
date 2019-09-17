@@ -141,6 +141,7 @@ export default function Upload(props) {
         fd.append('contactEmail', email);
         fd.append('contactPhone', phone);
         fd.append('notes', notes);
+        fd.append('csrf_token', getCookie('token'));
         let path;
         if (state.jid) {
             fd.append('jid', state.jid);
@@ -152,9 +153,6 @@ export default function Upload(props) {
             body: fd,
             method: 'POST',
             mode: 'cors',
-            headers: {
-                'x-csrf-token': getCookie('token'),
-            },
         }).then(res => res.json && res.json());
         if (res.code  && res.code === 10000) {
             setState({

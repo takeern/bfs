@@ -1,9 +1,6 @@
 import SignIn from './component/Signin';
 import SignUp from './component/Signup';
-import Uploads from './component/Upload';
 import Dashboard from './component/Dashboard';
-import Upload from './component/dashboard/Upload';
-import User from './component/dashboard/User';
 
 const route = [
     {
@@ -17,30 +14,10 @@ const route = [
         exact: true,
     },
     {
-        path: '/uploads',
-        component: Uploads,
-        exact: true,
-    },
-    {
         path: '/',
         component: Dashboard,
         exact: false,
         routes: [
-            {
-                path: '/upload',
-                component: Upload,
-                exact: true,
-            },
-            {
-                path: '/updateJournal',
-                component: Upload,
-                exact: true,
-            },
-            {
-                path: '/myAccount',
-                component: User,
-                exact: true,
-            },
         ],
     },
 ];

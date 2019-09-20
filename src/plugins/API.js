@@ -9,6 +9,9 @@ const API = {
     GET_UPLOAD_INFO: `${hostBase}/getUploadInfo`,
     UPDATE_UPLOAD_INFO: `${hostBase}/updateUploadInfo`,
     DELETE_UPLOAD_INFO: `${hostBase}/deleteUploadInfo`,
+    SEARCH_JOURNAL: `${hostBase}/searchJournal`,
+    UPDATE_PUBLISH_NAME: `${hostBase}/updatePublishName`,
+    PUBLISH_JOURNAL: `${hostBase}/publishJournal`,
 };
 
 export {

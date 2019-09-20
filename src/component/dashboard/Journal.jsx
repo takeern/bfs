@@ -8,9 +8,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DateFnsUtils from '@date-io/date-fns';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import EditIcon from '@material-ui/icons/Edit';
+import PublishIcon from '@material-ui/icons/Publish';
 import Dialog from './Dialog';
 
 import { tfetch } from '../../plugins/fetch';
@@ -37,16 +43,24 @@ const StyledTableRow = withStyles(theme => ({
 
 function createData(data) {
     const { 
-        title, 
+        title,
+        keyword,
         submitType: type, 
         path, 
         contactEmail: email, 
         updateTime,
         jid,
+        contactPhone: phone,
+        abstract,
+        publishStatus,
+        notes,
+        publishName,
+        name
     } = data;
     const file = path && path.split('|')[1];
     const time = updateTime && updateTime.split('.')[0];
-    return { title, type, file, email, time, jid };
+    const publishText = publishStatus ? 'Published' : 'Unpublished';
+    return { title, type, file, email, time, jid, keyword, phone, abstract, publishText, notes, name, publishName };
 }
 
 const useStyles = makeStyles(theme => ({
@@ -67,8 +81,20 @@ const useStyles = makeStyles(theme => ({
     },
     noData: {
         marginTop: 40,
+    },
+    inputWrap: {
+        width: 600,
+        flexFlow: 'row',
+    },
+    textField: {
+        width: 200,
     }
 }));
+
+const timeFormat = () => {
+    const date = new Date();
+    return `${date.getFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`;
+}
 
 export default function Journal(props) {
     window.props = props;
@@ -76,15 +102,21 @@ export default function Journal(props) {
     const [ state, setState ] = useState({
         data: [],
         showDialog: false,
-        editIndex: null,
+        publishIndex: null,
         msg: '',
         showNoData: false,
+        selectedDate: new Date(),
+        formatDate: timeFormat(),
+        searchEmail: '',
     });
 
     useEffect(() => {
         const getData = async () => {
             const res = await tfetch({
-                path: API.GET_UPLOAD_INFO,
+                path: API.SEARCH_JOURNAL,
+                data: {
+                    'updateTime': '2019-09-17',
+                },
             });
             if (res.code === 10000) {
                 setState({
@@ -106,11 +138,11 @@ export default function Journal(props) {
         return createData(item);
     });
 
-    const handleDelete = (index) => {
+    const handlePublish = (index) => {
         setState({
             ...state,
             showDialog: true,
-            editIndex: index,
+            publishIndex: index,
         });
     };
 
@@ -124,35 +156,34 @@ export default function Journal(props) {
         setState({ ...state, open: false });
     };
 
-    const logout = async () => {
-        const res = await tfetch({
-            path: API.SIGNOUT,
-            type: 'get',
-        });
-
-        if (res.code === 10000) {
-            props.history.push('/signIn');
-        }
-    };
-
     const handleClose = async (bool) => {
-        const { data, editIndex } = state;
+        const { data, publishIndex } = state;
+        const { publishName } = data[publishIndex];
+
+        if (!publishName || publishName ==='empty' || publishName === 'nothing') {
+            return setState({
+                ...state,
+                msg: 'publishName should not empty',
+                open: true,
+                showDialog: false,
+            });
+        }
+
         if (bool) {
             const res = await tfetch({
-                path: API.DELETE_UPLOAD_INFO,
+                path: API.PUBLISH_JOURNAL,
                 data: {
-                    jid: data[editIndex].jid,
+                    jid: data[publishIndex].jid,
+                    publishName,
                 },
             });
 
             if (res.code === 10000) {
                 setState({
                     ...state,
-                    msg: 'Delete Success',
+                    msg: 'Publish Success',
                     open: true,
                     showDialog: false,
-                    data: res.data,
-                    showNoData: res.data.length === 0 ? true : false,
                 });
             } else {
                 setState({
@@ -168,69 +199,143 @@ export default function Journal(props) {
                 showDialog: false
             });
         }
-    }
-    
+    };
+
+    const handleDateChange = (date, value) => {
+        setState({
+            ...state,
+            selectedDate: date,
+            formatDate: value,
+        });
+    };
+
+    const hanleInputChange = (payload, type) => {
+        let newState;
+        switch(type) {
+            case ('searchEmail'):
+                newState = {
+                    ...state,
+                    searchEmail: payload.target.value,
+                };
+                break;
+            case ('publishName'):
+                state.data[payload.index].publishName = payload.value;
+                newState = {
+                    ...state,
+                }
+                break;
+            default:
+                break;
+        }
+        setState(newState);
+    };
+
     return (
         <Paper className={classes.root}>
-        <Table className={classes.table}>
-            <TableHead>
-            <TableRow>
-                <StyledTableCell>Title</StyledTableCell>
-                <StyledTableCell align="center">Journal Type</StyledTableCell>
-                <StyledTableCell align="center">Journal File</StyledTableCell>
-                <StyledTableCell align="center">Contact Email</StyledTableCell>
-                <StyledTableCell align="center">Update Time</StyledTableCell>
-                <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-            </TableHead>
-            <TableBody>
-            {renderData.map((row, index) => (
-                <StyledTableRow key={row.jid}>
-                    <StyledTableCell component="th" scope="row">
-                        {row.title}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">{row.type}</StyledTableCell>
-                    <StyledTableCell align="center">{row.file}</StyledTableCell>
-                    <StyledTableCell align="center">{row.email}</StyledTableCell>
-                    <StyledTableCell align="center">{row.time}</StyledTableCell>
-                    <StyledTableCell align="center">
-                        <Button
-                            onClick={() => handleDelete(index)}
-                        > 
-                            <DeleteForeverIcon />
-                        </Button>
-                        <Button
-                            onClick={() => handleEdit(index)}
-                        >
-                            <EditIcon />
-                        </Button>
-                    </StyledTableCell>
-                </StyledTableRow>
-            ))}
-            </TableBody>
-        </Table>
-        {state.showNoData && <Typography variant='body2' color='textSecondary' align='center' className={classes.noData}>
-            {'There is no data'}
-        </Typography>}
-        <Button
-            variant='contained'
-            color='primary'
-            className={classes.logout}
-            onClick={logout}
-        >
-            Logout
-        </Button>
-        <Dialog showDialog={state.showDialog} handleClose={(state) => handleClose(state)}/>
-        <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            open={state.open}
-            onClose={handleSnackClose}
-            variant='error'
-            ContentProps={{
-            'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{state.msg}</span>}
-        />
-    </Paper>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around" className={classes.inputWrap}>
+                    <Typography variant='body2' color='textSecondary' align='center' className={classes.noData}>
+                        {'Fiter by :'}
+                    </Typography>
+                    <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Select Update Time (required)"
+                        format="yyyy-MM-dd"
+                        value={state.selectedDate}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                    <TextField
+						variant='outlined'
+						margin='normal'
+						required
+						name='email'
+						label='User Email'
+                        id='email'
+                        value={state.searchEmail}
+                        onChange={(e) => hanleInputChange(e, 'searchEmail')}
+					/>
+                </Grid>
+            </MuiPickersUtilsProvider>
+            <Table className={classes.table}>
+                <TableHead>
+                <TableRow>
+                    <StyledTableCell align="center">Journal Type</StyledTableCell>
+                    <StyledTableCell align="center">Journal Title</StyledTableCell>
+                    {/* <StyledTableCell align="center">Journal Keyword</StyledTableCell>
+                    <StyledTableCell align="center">Journal Abstract</StyledTableCell> */}
+                    <StyledTableCell align="center">Journal Path</StyledTableCell>
+                    <StyledTableCell align="center">Journal Notes</StyledTableCell>
+                    <StyledTableCell align="center">Publish updateTime</StyledTableCell>
+                    <StyledTableCell align="center">User Name</StyledTableCell>
+                    <StyledTableCell align="center">User Phone</StyledTableCell>
+                    <StyledTableCell align="center">User Email</StyledTableCell>
+                    <StyledTableCell align="center">Publish Name</StyledTableCell>
+                    <StyledTableCell align="center">Publish Status</StyledTableCell>
+                    <StyledTableCell align="center">Action</StyledTableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {renderData.map((row, index) => (
+                    <StyledTableRow key={row.jid}>
+                        <StyledTableCell component="th" scope="row" align="center">
+                            {row.type}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">{row.title}</StyledTableCell>
+                        {/* <StyledTableCell align="center">{row.keyword}</StyledTableCell>
+                        <StyledTableCell align="center">{row.abstract}</StyledTableCell> */}
+                        <StyledTableCell align="center">{row.file}</StyledTableCell>
+                        <StyledTableCell align="center">{row.notes}</StyledTableCell>
+                        <StyledTableCell align="center">{row.time}</StyledTableCell>
+                        <StyledTableCell align="center">{row.name}</StyledTableCell>
+                        <StyledTableCell align="center">{row.phone}</StyledTableCell>
+                        <StyledTableCell align="center">{row.email}</StyledTableCell>
+                        <StyledTableCell align="center">
+                            <TextField
+                                id="standard-password-input"
+                                label="Publish Name"
+                                className={classes.textField}
+                                value={row.publishName}
+                                margin="normal"
+                                onChange={(e) => hanleInputChange({
+                                    index,
+                                    value: e.target.value,
+                                }, 'publishName')}
+                            />
+                        </StyledTableCell>
+                        <StyledTableCell align="center">{row.publishText}</StyledTableCell>
+                        <StyledTableCell align="center">
+                            <Button
+                                onClick={() => handlePublish(index)}
+                            > 
+                                <PublishIcon />
+                            </Button>
+                        </StyledTableCell>
+                    </StyledTableRow>
+                ))}
+                </TableBody>
+            </Table>
+            {state.showNoData && <Typography variant='body2' color='textSecondary' align='center' className={classes.noData}>
+                {'There is no data'}
+            </Typography>}
+            <Dialog 
+                showDialog={state.showDialog} 
+                handleClose={(state) => handleClose(state)} 
+                msg={`Verify whether it is published or not. Once published, the file will be sent to the server to overwrite the published name, which will be irreversible.`}
+            />
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={state.open}
+                onClose={handleSnackClose}
+                variant='error'
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{state.msg}</span>}
+            />
+        </Paper>
     );
 }

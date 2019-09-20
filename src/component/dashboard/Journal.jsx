@@ -88,7 +88,8 @@ const useStyles = makeStyles(theme => ({
     },
     textField: {
         width: 200,
-    }
+    },
+    
 }));
 
 const timeFormat = () => {
@@ -110,30 +111,33 @@ export default function Journal(props) {
         searchEmail: '',
     });
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await tfetch({
-                path: API.SEARCH_JOURNAL,
-                data: {
-                    'updateTime': '2019-09-17',
-                },
-            });
-            if (res.code === 10000) {
-                setState({
-                    ...state,
-                    data: res.data || [],
-                    showNoData: res.data.length === 0 ? true : false,
-                });
-            } else {
-                setState({
-                    ...state,
-                    msg: res.msg || 'unknow error',
-                    open: true,
-                });
-            }
+    const search = async () => {
+        const data = {
+            'updateTime': state.formatDate,
         };
-        getData();
-    }, []);
+
+        if (state.searchEmail) {
+            data.email = state.searchEmail;
+        }
+        const res = await tfetch({
+            path: API.SEARCH_JOURNAL,
+            data,
+        });
+        if (res.code === 10000) {
+            setState({
+                ...state,
+                data: res.data || [],
+                showNoData: res.data.length === 0 ? true : false,
+            });
+        } else {
+            setState({
+                ...state,
+                msg: res.msg || 'unknow error',
+                open: true,
+            });
+        }
+    };
+
     const renderData = state.data.map(item => {
         return createData(item);
     });
@@ -258,6 +262,14 @@ export default function Journal(props) {
                         value={state.searchEmail}
                         onChange={(e) => hanleInputChange(e, 'searchEmail')}
 					/>
+                    <Button
+						// variant='outlined'
+						color='primary'
+                        className={classes.search}
+                        onClick={() => search()}
+					>
+                        Search
+					</Button>
                 </Grid>
             </MuiPickersUtilsProvider>
             <Table className={classes.table}>

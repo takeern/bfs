@@ -46,7 +46,7 @@ const currencies = [
       label: 'Journal of Innovation and Social Science Research (JISSR)',
     },
     {
-      value: 'ijppe',
+      value: 'ijpee',
       label: 'International Journal of Power and Energy Engineering (IJPEE)',
     },
     {

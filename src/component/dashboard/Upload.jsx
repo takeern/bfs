@@ -50,7 +50,7 @@ const currencies = [
       label: 'International Journal of Power and Energy Engineering (IJPEE)',
     },
     {
-      value: 'bhp',
+      value: 'bryanhousepub',
       label: 'Bryan House Publishing',
     },
 ];

@@ -57,7 +57,7 @@ function createData(data) {
         publishName,
         name
     } = data;
-    const file = path && path.split('|')[1];
+    const file = path;
     const time = updateTime && updateTime.split('.')[0];
     const publishText = publishStatus ? 'Published' : 'Unpublished';
     return { title, type, file, email, time, jid, keyword, phone, abstract, publishText, notes, name, publishName };
@@ -277,17 +277,15 @@ export default function Journal(props) {
                 <TableRow>
                     <StyledTableCell align="center">Journal Type</StyledTableCell>
                     <StyledTableCell align="center">Journal Title</StyledTableCell>
-                    {/* <StyledTableCell align="center">Journal Keyword</StyledTableCell>
-                    <StyledTableCell align="center">Journal Abstract</StyledTableCell> */}
                     <StyledTableCell align="center">Journal Path</StyledTableCell>
                     <StyledTableCell align="center">Journal Notes</StyledTableCell>
                     <StyledTableCell align="center">Publish updateTime</StyledTableCell>
                     <StyledTableCell align="center">User Name</StyledTableCell>
                     <StyledTableCell align="center">User Phone</StyledTableCell>
                     <StyledTableCell align="center">User Email</StyledTableCell>
-                    <StyledTableCell align="center">Publish Name</StyledTableCell>
+                    {/* <StyledTableCell align="center">Publish Name</StyledTableCell>
                     <StyledTableCell align="center">Publish Status</StyledTableCell>
-                    <StyledTableCell align="center">Action</StyledTableCell>
+                    <StyledTableCell align="center">Action</StyledTableCell> */}
                 </TableRow>
                 </TableHead>
                 <TableBody>
@@ -297,15 +295,13 @@ export default function Journal(props) {
                             {row.type}
                         </StyledTableCell>
                         <StyledTableCell align="center">{row.title}</StyledTableCell>
-                        {/* <StyledTableCell align="center">{row.keyword}</StyledTableCell>
-                        <StyledTableCell align="center">{row.abstract}</StyledTableCell> */}
-                        <StyledTableCell align="center">{row.file}</StyledTableCell>
+                        <StyledTableCell align="center"><a href={`${API.SERVER_HOST}/${row.file}`} target='_blank'>{row.file}</a></StyledTableCell>
                         <StyledTableCell align="center">{row.notes}</StyledTableCell>
                         <StyledTableCell align="center">{row.time}</StyledTableCell>
                         <StyledTableCell align="center">{row.name}</StyledTableCell>
                         <StyledTableCell align="center">{row.phone}</StyledTableCell>
                         <StyledTableCell align="center">{row.email}</StyledTableCell>
-                        <StyledTableCell align="center">
+                        {/* <StyledTableCell align="center">
                             <TextField
                                 id="standard-password-input"
                                 label="Publish Name"
@@ -326,7 +322,7 @@ export default function Journal(props) {
                                 <PublishIcon />
                             </Button>
                         </StyledTableCell>
-                    </StyledTableRow>
+                    </StyledTableRow> */}
                 ))}
                 </TableBody>
             </Table>

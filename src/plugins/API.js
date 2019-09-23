@@ -12,7 +12,7 @@ const API = {
     SEARCH_JOURNAL: `${hostBase}/searchJournal`,
     UPDATE_PUBLISH_NAME: `${hostBase}/updatePublishName`,
     PUBLISH_JOURNAL: `${hostBase}/publishJournal`,
-    SERVER_HOST: '47.103.12.134:6680'
+    SERVER_HOST: '//47.103.12.134:6680',
 };
 
 export {

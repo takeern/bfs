@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -295,7 +296,7 @@ export default function Journal(props) {
                             {row.type}
                         </StyledTableCell>
                         <StyledTableCell align="center">{row.title}</StyledTableCell>
-                        <StyledTableCell align="center"><a href={`${API.SERVER_HOST}/${row.file}`} target='_blank'>{row.file}</a></StyledTableCell>
+                        <StyledTableCell align="center"><Link href={`${API.SERVER_HOST}/${row.file}`} target='_blank'>{row.file}</Link></StyledTableCell>
                         <StyledTableCell align="center">{row.notes}</StyledTableCell>
                         <StyledTableCell align="center">{row.time}</StyledTableCell>
                         <StyledTableCell align="center">{row.name}</StyledTableCell>

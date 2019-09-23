@@ -321,8 +321,8 @@ export default function Journal(props) {
                             > 
                                 <PublishIcon />
                             </Button>
-                        </StyledTableCell>
-                    </StyledTableRow> */}
+                        </StyledTableCell> */}
+                    </StyledTableRow>
                 ))}
                 </TableBody>
             </Table>

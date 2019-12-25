@@ -1,4 +1,4 @@
-const dev = 'dev';
+const dev = 'host';
 const hostBase = dev === 'dev' ? '/api':'//45.32.84.18:4000';
 
 const API = {

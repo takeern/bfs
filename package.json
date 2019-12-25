@@ -60,6 +60,7 @@
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.6.2",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
     "portfinder": "^1.0.19",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

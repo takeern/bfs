@@ -114,6 +114,7 @@ export default () => {
 }}>
                     <option value='none'>选择上传期刊</option>
                     <option value='JISSR'>JISSR</option>
+                    <option value='JSSHL'>JSSHL</option>
                     <option value='IJPEE'>IJPEE</option>
                     <option value='IJOMSR'>IJOMSR</option>
                     <option value='bryanhousepub'>bryanhousepub</option>

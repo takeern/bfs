@@ -19,13 +19,13 @@ export default () => {
 	const fileNameWrapper = useRef(null);
 	const pathWrapper = useRef(null);
 	const selectType = useRef(null);
-	const uploadType = useRef(null);
+	const uploadEl = useRef(null);
 	const handleClick = () => {
 		inputEl.current.click();
 	};
 	const handleSubmit = async (files) => {
 		const journalType = selectType.current.value;
-		const uploadType = uploadType.current.value;
+		const uploadType = uploadEl.current.value;
 		if (journalType === 'none') {
 			return toast('请选择上传期刊', 5000);
 		}
@@ -104,7 +104,7 @@ export default () => {
 				onClick={(e) => handleClick(e)}
 				>上传文件</button>
 				<select
-				ref={uploadType}
+				ref={uploadEl}
 				style={{
 					display: 'block',
 					margin: '0 auto',

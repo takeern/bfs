@@ -1,5 +1,5 @@
 const dev = 'host';
-const hostBase = dev === 'dev' ? '/api':'//45.32.84.18:4000';
+const hostBase = dev === 'dev' ? '/api':'//144.202.119.156:4000';
 
 const API = {
     UPLOAD_PATH: `${hostBase}/upload`,

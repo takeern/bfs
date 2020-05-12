@@ -139,6 +139,7 @@ export default () => {
 					<option value='JSSPP'>JSSPP</option>
 					<option value='JTIEM'>JTIEM</option>
 					<option value='JOSTR'>JOSTR</option>
+					<option value='ISS3'>ISS3</option>
 					<option value='bryanhousepub'>bryanhousepub</option>
 				</select>
 			</div>

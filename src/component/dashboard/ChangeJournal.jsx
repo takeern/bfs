@@ -122,7 +122,7 @@ export default function Upload(props) {
             value = files[0];
             showJouralSpan.current.innerText = value.name;
         } else {
-            value = e.target.value;
+            value = e.target.value.trim();
         }
         setState(state => Object.assign({}, state, { [type]: value }));
         changeErrorStyle(type, value);
@@ -138,7 +138,7 @@ export default function Upload(props) {
         fd.append('journalStatus', journalStatus);
         fd.append('orderNumber', number);
 
-        const res = await fetch('http://localhost:80/updateJournal', {
+        const res = await fetch(API.UPDATE_JOURNAL, {
             body: fd,
             method: 'POST',
             mode: 'cors',
@@ -166,7 +166,7 @@ export default function Upload(props) {
     const getJournalStatus = async (orderNumber) => {
         const fd = new FormData();
         fd.append('orderNumber', orderNumber);
-        const res = await fetch('http://localhost:80/getJournalStatus', {
+        const res = await fetch(API.GET_JOURNAL_STATUS, {
             body: fd,
             method: 'POST',
             mode: 'cors',
@@ -184,32 +184,15 @@ export default function Upload(props) {
         }
         // fetch and get some thing
 
-        
-        const fd = new FormData();
-        fd.append('journalStatus', journalStatus);
-        fd.append('orderNumber', number);
-        const res = await fetch('http://localhost:80/getJournalStatus', {
-            body: fd,
-            method: 'POST',
-            mode: 'cors',
-        }).then(res => res.json && res.json());
-        if (res.code  && res.code === 200) {
-            console.log(res.journalStatus, JournalStatus);
-            const desc = `
-                请确认 将论文编号${number} 状态由  "${JournalStatus[res.journalStatus]}" 流转为 "${getCurrenciesDesc(state.journalStatus)}"
-            `;
-            setState({
-                ...state,
-                dialogDesc: desc,
-                showDialog: true,
-            });
-        } else {
-            setState({
-                ...state,
-                dialogDesc: 'unknow error',
-                showDialog: true,
-            });
-        }
+        const msg = await getJournalStatus(number);
+        const desc = `
+            请确认 将论文编号${number} 状态由  "${msg}" 流转为 "${getCurrenciesDesc(state.journalStatus)}"
+        `;
+        setState({
+            ...state,
+            dialogDesc: desc,
+            showDialog: true,
+        });
     };
 
     return (

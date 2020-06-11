@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import { API } from '../../plugins/API';
-import { getCookie } from '../../plugins/utils';
+
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -137,7 +137,7 @@ export default function Upload(props) {
         fd.append('contactInfo', email);
         fd.append('operator', operator);
         
-        const res = await fetch('http://localhost:80/addJournal', {
+        const res = await fetch(API.ADD_JOURNAL, {
             body: fd,
             method: 'POST', 
             mode: 'cors',

@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 export default function tDialog(props) {
-    console.log(props);
+    props = props.props
     return (
         <Dialog
             open={props.showDialog}
@@ -18,7 +18,7 @@ export default function tDialog(props) {
             <DialogTitle id="alert-dialog-title">{"Confirm"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    {'Please confirm whether to delete the corrected paper. Once deleted, it will not be restored.'}
+                    {props.desc}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

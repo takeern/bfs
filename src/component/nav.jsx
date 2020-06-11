@@ -25,7 +25,11 @@ const HomeNav = () => {
             icon: <AccountCircle />,
         },
         {
-            text: 'Reports',
+            text: 'AddJournal',
+            icon: <BarChartIcon />,
+        },
+        {
+            text: 'ChangeJournal',
             icon: <BarChartIcon />,
         },
         {

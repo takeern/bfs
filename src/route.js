@@ -4,6 +4,8 @@ import Uploads from './component/Upload';
 import Dashboard from './component/Dashboard';
 import Upload from './component/dashboard/Upload';
 import User from './component/dashboard/User';
+import reports from './component/dashboard/Reports';
+import changejournal from './component/dashboard/ChangeJournal';
 
 const route = [
     {
@@ -36,11 +38,21 @@ const route = [
                 component: Upload,
                 exact: true,
             },
+            // {
+            //     path: '/myAccount',
+            //     component: User,
+            //     exact: true,
+            // },
             {
-                path: '/myAccount',
-                component: User,
+                path: '/addjournal',
+                component: reports,
                 exact: true,
             },
+            {
+                path: '/changejournal',
+                component: changejournal,
+                exact: true,
+            }
         ],
     },
 ];

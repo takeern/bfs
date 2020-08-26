@@ -26,7 +26,7 @@
       }
     },
     "build:client": {
-      "command": "webpack --progress --config ./config/webpack.production.js"
+      "command": "webpack --progress --config ./config/webpack.production.js    --max_old_space_size=4096 "
     },
     "build:server": {
       "command": "webpack --progress --config ./config/webpack.server.js"

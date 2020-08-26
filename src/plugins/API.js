@@ -2,7 +2,7 @@ const dev = 'host';
 const hostBase = dev === 'dev' ? '/api':'//144.202.119.156:4000';
 
 
-const journalHost = dev === 'dev' ? 'http://localhost:80' : '//112.74.110.72:8010';
+const journalHost = dev === 'dev' ? 'http://localhost:80' : '//112.74.110.72:8081';
 
 const API = {
     UPLOAD_PATH: `${hostBase}/upload`,

@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 export default function tDialog(props) {
-    props = props.props
+    console.log(props);
     return (
         <Dialog
             open={props.showDialog}

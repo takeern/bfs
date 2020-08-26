@@ -3,7 +3,7 @@ import SignUp from './component/Signup';
 import Uploads from './component/Upload';
 import Dashboard from './component/Dashboard';
 import Upload from './component/dashboard/Upload';
-import User from './component/dashboard/User';
+import Admin from './component/dashboard/Admin';
 import reports from './component/dashboard/Reports';
 import changejournal from './component/dashboard/ChangeJournal';
 
@@ -24,6 +24,11 @@ const route = [
         exact: true,
     },
     {
+        path: '/publish',
+        component: Uploads,
+        exact: true,
+    },
+    {
         path: '/',
         component: Dashboard,
         exact: false,
@@ -38,11 +43,11 @@ const route = [
                 component: Upload,
                 exact: true,
             },
-            // {
-            //     path: '/myAccount',
-            //     component: User,
-            //     exact: true,
-            // },
+            {
+                path: '/admin',
+                component: Admin,
+                exact: true,
+            },
             {
                 path: '/addjournal',
                 component: reports,
@@ -52,7 +57,7 @@ const route = [
                 path: '/changejournal',
                 component: changejournal,
                 exact: true,
-            }
+            },
         ],
     },
 ];

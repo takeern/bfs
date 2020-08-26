@@ -5,10 +5,7 @@ export const tfetch = ({ path, type, data}) => {
     if (type === 'get') {
         return fetch(path, {
             method: 'GET',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
+            // mode: 'no-cors',
         }).then(res => {
             return res.json();
         });

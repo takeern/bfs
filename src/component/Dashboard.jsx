@@ -26,13 +26,13 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link color="inherit" href="./">
                 Your Website
             </Link>{' '}
             {new Date().getFullYear()}
             {'. Built with '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Material-UI.
+            <Link color="inherit" href="./">
+                takeern
             </Link>
         </Typography>
     );

@@ -13,28 +13,29 @@ import LayersIcon from '@material-ui/icons/Layers';
 const HomeNav = () => {
     const list = [
         {
-            text: 'Dashboard',
-            icon: <DashboardIcon />,
-        },
-        {
-            text: 'Upload',
-            icon: <CloudUpload />,
-        },
-        {
-            text: 'MyAccount',
+            text: 'Admin',
+            name: '管理',
             icon: <AccountCircle />,
         },
         {
-            text: 'AddJournal',
-            icon: <BarChartIcon />,
+            text: 'Upload',
+            name: '上传论文',
+            icon: <CloudUpload />,
         },
         {
             text: 'ChangeJournal',
+            name: '修改论文状态',
             icon: <BarChartIcon />,
         },
         {
-            text: 'Integrations',
+            text: 'Publish',
+            name: '发布',
             icon: <LayersIcon />,
+        },
+        {
+            text: 'Dashboard',
+            name: '跳板',
+            icon: <DashboardIcon />,
         },
     ];
 
@@ -45,7 +46,7 @@ const HomeNav = () => {
                     <ListItemIcon>
                         {item.icon}
                     </ListItemIcon>
-                    <ListItemText primary={item.text}/>
+                    <ListItemText primary={item.name}/>
                 </ListItem>
             </div>
         );

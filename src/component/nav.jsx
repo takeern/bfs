@@ -13,6 +13,11 @@ import LayersIcon from '@material-ui/icons/Layers';
 const HomeNav = () => {
     const list = [
         {
+            text: 'NewAdmin',
+            name: '新管理',
+            icon: <AccountCircle />,
+        },
+        {
             text: 'Admin',
             name: '管理',
             icon: <AccountCircle />,

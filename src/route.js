@@ -4,6 +4,7 @@ import Uploads from './component/Upload';
 import Dashboard from './component/Dashboard';
 import Upload from './component/dashboard/Upload';
 import Admin from './component/dashboard/Admin';
+import NewAdmin from './component/dashboard/NewAdmin';
 import reports from './component/dashboard/Reports';
 import changejournal from './component/dashboard/ChangeJournal';
 
@@ -46,6 +47,11 @@ const route = [
             {
                 path: '/admin',
                 component: Admin,
+                exact: true,
+            },
+            {
+                path: '/newAdmin',
+                component: NewAdmin,
                 exact: true,
             },
             {

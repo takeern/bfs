@@ -7,6 +7,7 @@ import Admin from './component/dashboard/Admin';
 import NewAdmin from './component/dashboard/NewAdmin';
 import reports from './component/dashboard/Reports';
 import changejournal from './component/dashboard/ChangeJournal';
+import parsexml from './component/ParseExcel';
 
 const route = [
     {
@@ -62,6 +63,11 @@ const route = [
             {
                 path: '/changejournal',
                 component: changejournal,
+                exact: true,
+            },
+            {
+                path: '/parsexml',
+                component: parsexml,
                 exact: true,
             },
         ],

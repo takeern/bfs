@@ -9,6 +9,7 @@ import CloudUpload from '@material-ui/icons/CloudUpload';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
+import AdbIcon from '@material-ui/icons/Adb';
 
 const HomeNav = () => {
     const list = [
@@ -41,6 +42,11 @@ const HomeNav = () => {
             text: 'Dashboard',
             name: '跳板',
             icon: <DashboardIcon />,
+        },
+        {
+            text: 'parsexml',
+            name: '解析 excel',
+            icon: <AdbIcon />,
         },
     ];
 

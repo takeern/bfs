@@ -1,6 +1,5 @@
 const dev = 'host';
-const hostBase = dev === '/api';
-
+const hostBase = dev === 'dev' ? '/api':'//66.42.109.174:4000';
 
 const journalHost = dev === 'dev' ? 'http://localhost:4000' : '//112.74.110.72:8081';
 

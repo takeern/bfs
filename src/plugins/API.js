@@ -1,5 +1,5 @@
 const dev = 'host';
-const hostBase = dev === 'dev' ? '/api':'//66.42.109.174:4000';
+const hostBase = dev === window.location.href.includes('dev') ? '/api/dev': '/api';
 
 const journalHost = dev === 'dev' ? 'http://localhost:4000' : '//112.74.110.72:8081';
 

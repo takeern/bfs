@@ -47,7 +47,7 @@ export default () => {
 				const infoDiv = document.createElement('div');
 				pathDiv.innerText = res.path;
 				nameDiv.innerText = files[i].name;
-				infoDiv.innerText = res.journals
+				infoDiv.innerText = JSON.stringify(res.journals)
 				fileNameWrapper.current.appendChild(nameDiv);
 				pathWrapper.current.appendChild(pathDiv);
 				infoWrapper.current.appendChild(infoDiv);

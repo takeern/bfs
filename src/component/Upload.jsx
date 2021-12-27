@@ -18,6 +18,7 @@ export default () => {
 	const inputEl = useRef(null);
 	const fileNameWrapper = useRef(null);
 	const pathWrapper = useRef(null);
+	const infoWrapper = useRef(null);
 	const selectType = useRef(null);
 	const uploadEl = useRef(null);
 	const handleClick = () => {
@@ -43,10 +44,13 @@ export default () => {
 			if (res.code === 1) {
 				const nameDiv = document.createElement('div');
 				const pathDiv = document.createElement('div');
+				const infoDiv = document.createElement('div');
 				pathDiv.innerText = res.path;
 				nameDiv.innerText = files[i].name;
+				infoDiv.innerText = res.journals
 				fileNameWrapper.current.appendChild(nameDiv);
 				pathWrapper.current.appendChild(pathDiv);
+				infoWrapper.current.appendChild(infoDiv);
 			} else {
 				res.msg ? toast(res.msg) : toast('未知错误');
 			}
@@ -160,6 +164,11 @@ export default () => {
                 ref={pathWrapper}
                 >
                     <h4>文件地址</h4>
+                </div>
+								<div
+                ref={infoWrapper}
+                >
+                    <h4>描述</h4>
                 </div>
             </div>
         </div>

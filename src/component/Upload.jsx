@@ -45,7 +45,10 @@ export default () => {
 				const nameDiv = document.createElement('div');
 				const pathDiv = document.createElement('div');
 				const infoDiv = document.createElement('div');
-				pathDiv.innerText = res.path;
+				const journals = JSON.stringify(res.journals);
+				const hasError = journals.includes('鈥檚') || journals.includes('鈥檚');
+
+				pathDiv.innerText = res.path + `${hasError} ? '检测到错误' : ''}`;
 				nameDiv.innerText = files[i].name;
 				infoDiv.innerText = JSON.stringify(res.journals)
 				fileNameWrapper.current.appendChild(nameDiv);

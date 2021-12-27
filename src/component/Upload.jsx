@@ -48,10 +48,9 @@ export default () => {
 				const journals = JSON.stringify(res.journals);
 				
 				const hasError = journals.includes('鈥檚') || journals.includes('鈥') || journals.includes('�');
-				console.log('hasError', hasError);
-				window.journals = journals;
+
 				pathDiv.innerText = res.path;
-				nameDiv.innerText = files[i].name + `${hasError} ? '检测到错误' : ''}`;
+				nameDiv.innerText = files[i].name + `${hasError ? '检测到错误' : ''}`;
 				infoDiv.innerText = journals
 				fileNameWrapper.current.appendChild(nameDiv);
 				pathWrapper.current.appendChild(pathDiv);

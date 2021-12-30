@@ -45,7 +45,7 @@ export default () => {
 				const nameDiv = document.createElement('div');
 				const pathDiv = document.createElement('div');
 				const infoDiv = document.createElement('div');
-				const journals = JSON.stringify(res.journals);
+				const journals = JSON.stringify(res.journals || '');
 				
 				const hasError = journals.includes('鈥檚') || journals.includes('鈥') || journals.includes('�');
 
